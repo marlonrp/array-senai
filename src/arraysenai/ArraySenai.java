@@ -7,10 +7,10 @@ import java.util.Objects;
 public class ArraySenai {
 	private Integer[] arr;
 	private int size = 10;
-	private int initialCapacity = 10;
+	private int initialCapacity;
 	private int defaultResizeValue = 5;
 	private int emptySpace = 0; 
-	private boolean resizable = true;
+	private boolean resizable = false;
 	
 	ArraySenai() {
 		this.arr = new Integer[this.size];
@@ -32,19 +32,24 @@ public class ArraySenai {
 		return this.arr;
 	}
 	
-	public Integer get(int index) {
-		return this.arr[index];
+	public Integer get(int index) throws Exception {
+		if (index < this.emptySpace) {
+			return this.arr[index];
+		} else {
+			throw new Exception("Index inexistente!");
+		}
 	}
 
-	public int getSize() {
-		return size;
+	public int size() {
+//		return this.emptySpace > 0 ? (this.emptySpace - 1) : this.emptySpace;
+		return this.emptySpace;
 	}
 	
 	public void add(Integer val) throws Exception {
 		if (this.resizable && this.emptySpace == this.size - 2) {
 			this.resize();
-		} else if(!this.resizable && this.emptySpace > this.defaultResizeValue) {
-			throw new Exception("Exception message");
+		} else if(!this.resizable && this.emptySpace > this.size - 1) {
+			throw new Exception("Este array não pode ser redimencionado, index inexistente!");
 		}
 		if (Objects.isNull(this.arr[this.emptySpace])) {
 			this.arr[this.emptySpace] = val;
@@ -56,17 +61,28 @@ public class ArraySenai {
 	}
 	
 	public void add(int index, Integer val) throws Exception {
-		if (this.resizable && index >= this.size - 2) {
-			this.resize();
+		if(index > this.emptySpace) {
+			throw new Exception("Index inexistente!");
 		} else if(!this.resizable && index > this.size) {
 			throw new Exception("Este array não pode ser redimencionado, index inexistente!");
+		} else if (this.resizable && index > this.size - 2 ) {
+			this.resize();
 		}
+//		if (this.emptySpace < this.size && Objects.nonNull(this.arr[index])){
+//			
+//		}
 		if (Objects.isNull(this.arr[index])) {
 			this.arr[index] = val;
+			++this.emptySpace;
 		} else {
 			Integer aux = this.arr[index];
 			this.arr[index] = val;
-			this.add(++index, aux);
+			if(index == this.emptySpace) {
+				++this.emptySpace;
+			}
+			if (aux != null) {
+				this.add(++index, aux);
+			}
 		}
 	}
 	
