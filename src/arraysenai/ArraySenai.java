@@ -3,45 +3,43 @@ package arraysenai;
 import java.util.Arrays;
 import java.util.Objects;
 
-
-public class ArraySenai {
-	private Integer[] arr;
+public class ArraySenai<T> {
+	private Object[] arr;
 	private int size = 10;
 	private int initialCapacity;
-	private int defaultResizeValue = 5;
+	private int defaultResizeValue = 10;
 	private int emptySpace = 0; 
 	private boolean resizable = false;
 	
 	ArraySenai() {
-		this.arr = new Integer[this.size];
+		this.arr = new Object[this.size];
 		this.initialCapacity = this.size;
 	}
 	
 	ArraySenai(int size) {
-		this.arr = new Integer[size];
+		this.arr = new Object[size];
 		this.initialCapacity = this.size = size;
 	}
 	
 	ArraySenai(int size, boolean resizable) {
-		this.arr = new Integer[size];
+		this.arr = new Object[size];
 		this.initialCapacity = this.size = size;
 		this.resizable = resizable;
 	}
 	
-	public Integer[] get() {
-		return this.arr;
-	}
-	
-	public Integer get(int index) throws Exception {
+	public Object get(int index) throws Exception {
 		if (index < this.emptySpace) {
 			return this.arr[index];
 		} else {
 			throw new Exception("Index inexistente!");
 		}
 	}
+	
+	public void set(int index, T value) {
+		this.arr[index] = value;
+	}
 
 	public int size() {
-//		return this.emptySpace > 0 ? (this.emptySpace - 1) : this.emptySpace;
 		return this.emptySpace;
 	}
 	
@@ -60,7 +58,7 @@ public class ArraySenai {
 		}
 	}
 	
-	public void add(int index, Integer val) throws Exception {
+	public void add(int index, Object val) throws Exception {
 		if(index > this.emptySpace) {
 			throw new Exception("Index inexistente!");
 		} else if(!this.resizable && index > this.size) {
@@ -68,14 +66,12 @@ public class ArraySenai {
 		} else if (this.resizable && index > this.size - 2 ) {
 			this.resize();
 		}
-//		if (this.emptySpace < this.size && Objects.nonNull(this.arr[index])){
-//			
-//		}
+
 		if (Objects.isNull(this.arr[index])) {
 			this.arr[index] = val;
 			++this.emptySpace;
 		} else {
-			Integer aux = this.arr[index];
+			Object aux = this.arr[index];
 			this.arr[index] = val;
 			if(index == this.emptySpace) {
 				++this.emptySpace;
@@ -86,8 +82,39 @@ public class ArraySenai {
 		}
 	}
 	
+	public void clear() {
+		this.arr = new Integer[this.initialCapacity];
+		this.emptySpace = 0;
+	}
+	
 	private void resize() {
 		this.size += this.defaultResizeValue;
 		this.arr = Arrays.copyOf(this.arr, this.size);
+	}
+	
+	public boolean isEmpty() {
+		return this.emptySpace == 0;
+	}
+	
+	public boolean isFull() {
+		return !this.resizable && this.emptySpace >= this.initialCapacity;
+	}
+	
+	public int indexOf(T value) {
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == value) return i;
+		}
+		return -1;
+	}
+	
+	public boolean contains(T value) {
+		return this.emptySpace > 0 && this.indexOf(value) > -1;
+	}
+	
+	public int lastIndexOf(T value) {
+		for (int i = (this.emptySpace - 1); 0 <= i; i--) {
+			if (arr[i] == value) return i; 
+		}
+		return -1;
 	}
 }

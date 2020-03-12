@@ -1,13 +1,12 @@
 package arraysenai;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		ArraySenai a = new ArraySenai();
+		ArraySenai<Integer> a = new ArraySenai<Integer>();
 		List<Integer> b = new ArrayList<Integer>();
 		
 		System.out.println("Tamanho inicial");
@@ -16,28 +15,34 @@ public class Main {
 		System.out.println("-----------------------------------");
 		
 		a.add(0);
-//		a.add(9, 99); // erro
 		a.add(1);
 		a.add(1, 2);
 		a.add(3, 3);
 		a.add(0, 4);
-		
+		a.add(5);
+		a.add(6);
+		a.add(7);
+		a.add(44);
+		a.add(9);
+//		a.add(10); // erro se resizable false
+//		a.clear();
+//		System.out.println("clear-size - " + a.size());
+		System.out.println(a.isEmpty()); // false
+		System.out.println(a.isFull()); // true
+		a.set(0, 44);
+		System.out.println(a.get(7)); // 7
+		System.out.println(a.indexOf(44)); // 0
+		System.out.println(a.indexOf(444)); // -1
+		System.out.println(a.contains(444)); // false
+		System.out.println(a.contains(44)); // true
+		System.out.println(a.lastIndexOf(44)); // 8
+		System.out.println(a.lastIndexOf(444)); // -1
 		b.add(0);
 //		b.add(9, 10); // erro
 		b.add(1);
 		b.add(1, 2);
 		b.add(3, 3);
 		b.add(0, 4);
-
-		// Inserção de bloco
-		int val = 4;
-		int aux = -1;		
-		for (int i = 0; i < aux; i++) {
-			++val;
-			a.add(val);
-			b.add(val);
-		}
-//		a.add(20);
 
 		int sizeA = a.size();
 		System.out.println("Size A = " + sizeA);
