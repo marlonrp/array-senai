@@ -69,10 +69,6 @@ public class Main {
 		for (Object x : a.toArray()) {
 			System.out.println(x);
 		}
-//		Integer[] c = a.toArray();
-//		for (Integer f : c) {
-//			System.out.println(f);
-//		}
 	}
 
 }
