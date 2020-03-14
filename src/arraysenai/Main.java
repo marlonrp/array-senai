@@ -20,8 +20,8 @@ public class Main {
 		a.add(3, 3);
 		a.add(0, 4);
 		a.add(5);
-		a.add(6);
-		a.add(7);
+//		a.add(6);
+//		a.add(7);
 		a.add(44);
 		a.add(9);
 //		a.add(10); // erro se resizable false
@@ -63,6 +63,16 @@ public class Main {
 			System.out.println(i + " - " + b.get(i));
 			System.out.println("-------");
 		}
+		
+		System.out.println("-----------------------------------");
+		System.out.println(a.toArray());
+		for (Object x : a.toArray()) {
+			System.out.println(x);
+		}
+//		Integer[] c = a.toArray();
+//		for (Integer f : c) {
+//			System.out.println(f);
+//		}
 	}
 
 }

@@ -1,7 +1,10 @@
 package arraysenai;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class ArraySenai<T> {
 	private Object[] arr;
@@ -47,7 +50,7 @@ public class ArraySenai<T> {
 		if (this.resizable && this.emptySpace == this.size - 2) {
 			this.resize();
 		} else if(!this.resizable && this.emptySpace > this.size - 1) {
-			throw new Exception("Este array não pode ser redimencionado, index inexistente!");
+			throw new Exception("Este array nï¿½o pode ser redimencionado, index inexistente!");
 		}
 		if (Objects.isNull(this.arr[this.emptySpace])) {
 			this.arr[this.emptySpace] = val;
@@ -62,7 +65,7 @@ public class ArraySenai<T> {
 		if(index > this.emptySpace) {
 			throw new Exception("Index inexistente!");
 		} else if(!this.resizable && index > this.size) {
-			throw new Exception("Este array não pode ser redimencionado, index inexistente!");
+			throw new Exception("Este array nï¿½o pode ser redimencionado, index inexistente!");
 		} else if (this.resizable && index > this.size - 2 ) {
 			this.resize();
 		}
@@ -117,4 +120,14 @@ public class ArraySenai<T> {
 		}
 		return -1;
 	}
+
+	public T[] toArray() {
+		T[] aux = (T[]) new Object[this.emptySpace - 1];
+		for (int i = 0; i < this.emptySpace - 1; i++) {
+			if (this.arr[i] != null) {
+				aux[i] = (T) this.arr[i]; 
+			}
+		}
+		return aux;
+    }
 }
